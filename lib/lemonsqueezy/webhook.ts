@@ -1,8 +1,9 @@
 import * as crypto from 'crypto';
+import { Buffer } from 'node:buffer';
 
-export function verifyWebhookSignature(payload: string, signature: string): boolean {
+export function verifyWebhookSignature(payload: Buffer, signature: Buffer): boolean {
   const hmac = Buffer.from(
-    crypto.createHmac('sha256', process.env.LEMONSQUEEZY_WEBHOOK_SECRET as any).update(payload).digest('hex'),
+    crypto.createHmac('sha256', process.env.LEMONSQUEEZY_WEBHOOK_SECRET as any).update(payload as any).digest('hex'),
     'hex',
   );
 

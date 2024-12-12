@@ -1,13 +1,20 @@
 import { headers } from 'next/headers';
+import { buffer } from "micro";
 import { verifyWebhookSignature, handleWebhookEvent } from '@/lib/lemonsqueezy/webhook';
 import { supabase } from '@/lib/supabase';
 
 export async function POST(req: Request) {
   try {
     const body = await req.text();
-    const signature = headers().get('x-signature');
+    const payload = await buffer(req as any);
 
-    if (!signature || !verifyWebhookSignature(body, signature)) {
+    // Get the signature from the request headers.
+    const signature = Buffer.from(
+      headers().get('x-signature') ?? '',
+      'hex',
+    );
+
+    if (!signature || !verifyWebhookSignature(payload, signature)) {
       return new Response('Invalid signature', { status: 401 });
     }
 
