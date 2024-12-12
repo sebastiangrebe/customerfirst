@@ -10,13 +10,12 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 const algoliaClient = algoliasearch(Deno.env.get("ALGOLIA_APP_ID")!, Deno.env.get("ALGOLIA_ADMIN_API_KEY")!);
 const algoliaIndex = algoliaClient.initIndex('requirements');
 
-
-console.log("Hello from Functions!")
-
 Deno.serve(async (req) => {
   try {
     // Parse the webhook payload
-    const { type, record } = await req.json();
+    const { type, record, ...rest } = await req.json();
+
+    console.log(type, record, rest)
 
     if (!type || !record) {
       return new Response("Invalid payload", { status: 400 });

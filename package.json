@@ -58,7 +58,7 @@
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
     "class-variance-authority": "^0.7.0",
-    "micro": "^10.0.1",
+    "emblor": "^1.4.7",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "lucide-react": "^0.446.0",

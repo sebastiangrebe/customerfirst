@@ -11,10 +11,12 @@ export async function createRequirement(data: RequirementInput) {
 
   if (!session) throw new Error('Unauthorized');
   supabase.auth.setSession({ access_token: session.accessToken, refresh_token: session.refreshToken });
+
   const { data: requirement, error } = await supabase
     .from('requirements')
     .insert([{
       ...data,
+      tags: data.tags ? data.tags : [],
       status: 'open',
     }])
     .select()

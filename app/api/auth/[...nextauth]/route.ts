@@ -22,7 +22,7 @@ const handler = NextAuth({
           email: credentials.email,
           password: credentials.password,
         });
-        console.log(data);
+        console.log("hier", data);
 
         if (data.user) {
           return {
@@ -49,11 +49,12 @@ const handler = NextAuth({
     error: '/',
   },
   callbacks: {
-    async jwt({ token, account, user }: any) {
+    async jwt({ token, account, user, ...rest }: any) {
         // Include access token when user signs in
         if (user?.accessToken) {
-            token.accessToken = user.accessToken;
-            token.refreshToken = user.refreshToken;
+          token.accessToken = user.accessToken;
+          token.id = user.id;
+          token.refreshToken = user.refreshToken;
         }
         return token;
     },
@@ -61,6 +62,7 @@ const handler = NextAuth({
         // Pass the access token to the session
         session.accessToken = token.accessToken;
         session.refreshToken = token.refreshToken;
+        session.id = token.sub;
 
         return session;
     },

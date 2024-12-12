@@ -2,9 +2,9 @@ import { supabase } from '@/lib/supabase';
 import type { Winner } from '@/types';
 
 interface CreateWinnerInput {
-  requirementId: string;
-  applicationId: string;
-  websiteUrl: string;
+  requirement_id: string;
+  application_id: string;
+  website_url: string;
 }
 
 export async function createWinner(data: CreateWinnerInput) {
@@ -23,7 +23,7 @@ export async function createWinner(data: CreateWinnerInput) {
   await supabase
     .from('requirements')
     .update({ status: 'closed' })
-    .eq('id', data.requirementId);
+    .eq('id', data.requirement_id);
 
   return winner;
 }
@@ -31,7 +31,10 @@ export async function createWinner(data: CreateWinnerInput) {
 export async function getWinners() {
   const { data: winners, error } = await supabase
     .from('winners')
-    .select('*')
+    .select(`
+      *,
+      applications(*)
+    `)
     .order('selected_at', { ascending: false })
     .limit(12);
 

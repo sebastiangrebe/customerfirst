@@ -5,16 +5,19 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { updateApplicationStatus } from '@/lib/actions/applications';
 import { createWinner } from '@/lib/actions/winners';
 import { formatDistanceToNow } from 'date-fns';
 import type { RequirementWithApplications } from '@/types';
+import { updateApplicationStatus } from '@/lib/actions/application-client';
+import { findCategory } from '@/helpers/findCategory';
 
 interface Props {
   requirement: RequirementWithApplications;
 }
 
 export function RequirementWithApplications({ requirement }: Props) {
+  const category = findCategory(requirement.category);
+  
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
   const { toast } = useToast();
 
@@ -23,9 +26,9 @@ export function RequirementWithApplications({ requirement }: Props) {
     try {
       await updateApplicationStatus(applicationId, 'accepted');
       await createWinner({
-        requirementId: requirement.id,
-        applicationId,
-        websiteUrl: requirement.applications.find(a => a.id === applicationId)?.websiteUrl || '',
+        requirement_id: requirement.id,
+        application_id: applicationId,
+        website_url: requirement.applications.find(a => a.id === applicationId)?.website_url || '',
       });
       toast({
         title: "Success",
@@ -66,8 +69,8 @@ export function RequirementWithApplications({ requirement }: Props) {
       <CardHeader>
         <CardTitle>{requirement.title}</CardTitle>
         <div className="flex gap-2 mt-2">
-          <Badge>{requirement.category}</Badge>
-          <Badge variant="outline">{requirement.status}</Badge>
+          <Badge>{category.name}</Badge>
+          <Badge variant="outline">{requirement.status === 'open' ? 'Open' : 'Closed'}</Badge>
         </div>
       </CardHeader>
       <CardContent>
@@ -81,22 +84,31 @@ export function RequirementWithApplications({ requirement }: Props) {
                 <div className="flex justify-between items-start">
                   <div>
                     <a
-                      href={application.websiteUrl}
+                      href={application.website_url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary hover:underline"
                     >
-                      {application.websiteUrl}
+                      {application.website_url}
                     </a>
                     <p className="text-sm text-muted-foreground mt-1">
                       Price: ${application.pricing}
                     </p>
-                    <p className="text-sm mt-2">{application.contactDetails}</p>
+                    <p className="text-md mt-4">
+                      Product Description:
+                    </p>
+                    <p className="text-sm mt-1">
+                      ${application.product_description}
+                    </p>
+                    <p className="text-md mt-4">
+                      Contact Details:
+                    </p>
+                    <p className="text-sm mt-1">{application.contact_details}</p>
                     <p className="text-xs text-muted-foreground mt-2">
                       Applied {formatDistanceToNow(new Date(application.created_at))} ago
                     </p>
                   </div>
-                  <div className="flex gap-2">
+                  {requirement.status === 'open' ? <div className="flex gap-2">
                     <Button
                       size="sm"
                       onClick={() => handleAccept(application.id)}
@@ -112,7 +124,7 @@ export function RequirementWithApplications({ requirement }: Props) {
                     >
                       Reject
                     </Button>
-                  </div>
+                  </div> : null}
                 </div>
               </CardContent>
             </Card>

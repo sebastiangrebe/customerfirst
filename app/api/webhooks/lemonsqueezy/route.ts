@@ -1,12 +1,10 @@
 import { headers } from 'next/headers';
-import { buffer } from "micro";
 import { verifyWebhookSignature, handleWebhookEvent } from '@/lib/lemonsqueezy/webhook';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/supabaseSecure';
 
 export async function POST(req: Request) {
   try {
     const body = await req.text();
-    const payload = await buffer(req as any);
 
     // Get the signature from the request headers.
     const signature = Buffer.from(
@@ -14,25 +12,27 @@ export async function POST(req: Request) {
       'hex',
     );
 
-    if (!signature || !verifyWebhookSignature(payload, signature)) {
+    if (!signature || !verifyWebhookSignature(body as any, signature)) {
       return new Response('Invalid signature', { status: 401 });
     }
 
     const event = handleWebhookEvent(JSON.parse(body));
 
     if (event?.type === 'ORDER_CREATED') {
-      const { requirementId, websiteUrl, pricing, contactDetails } = event.data;
+      const { requirement_id, website_url, pricing, contact_details, user_id, product_description } = event.data;
 
       // Create the application only after successful payment
       const { data: application, error } = await supabase
         .from('applications')
         .insert([{
-          requirementId,
-          websiteUrl,
+          requirement_id,
+          website_url,
+          user_id,
+          product_description,
           pricing,
-          contactDetails,
+          contact_details,
           status: 'pending',
-          createdAt: new Date().toISOString(),
+          created_at: new Date().toISOString(),
         }])
         .select()
         .single();

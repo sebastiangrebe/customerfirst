@@ -1,6 +1,8 @@
 import { getWinners } from '@/lib/actions/winners';
 import { WinnerCard } from '@/components/winner-card';
 
+export const dynamic = 'force-dynamic'
+
 export default async function WinnersPage() {
   const winners = await getWinners();
 

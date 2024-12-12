@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { searchIndex } from '@/lib/algolia';
 import type { Requirement } from '@/types';
 
-export function useSearch(query: string) {
+export function useSearch(query: string, category: string) {
   const [requirements, setRequirements] = useState<Requirement[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -12,7 +12,9 @@ export function useSearch(query: string) {
     const search = async () => {
       setIsLoading(true);
       try {
-        const { hits } = await searchIndex.search<Requirement>(query);
+        const { hits } = await searchIndex.search<Requirement>(query, {
+          filters: (category && category !== 'all') ? `category:${category}` : undefined,
+        });
         setRequirements(hits);
       } catch (error) {
         console.error('Search failed:', error);
@@ -24,7 +26,7 @@ export function useSearch(query: string) {
 
     const timer = setTimeout(search, 300);
     return () => clearTimeout(timer);
-  }, [query]);
+  }, [query, category]);
 
   return { requirements, isLoading };
 }

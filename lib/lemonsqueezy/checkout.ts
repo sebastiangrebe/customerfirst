@@ -5,10 +5,11 @@ import { createCheckout as createCheckoutLSQ } from '@lemonsqueezy/lemonsqueezy.
 interface CreateCheckoutOptions {
   email: string;
   checkoutData: {
-    requirementId: string;
-    websiteUrl: string;
+    requirement_id: string;
+    website_url: string;
     pricing: string;
-    contactDetails: string;
+    contact_details: string;
+    user_id: string;
   };
 }
 

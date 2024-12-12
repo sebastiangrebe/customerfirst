@@ -43,7 +43,8 @@ export function ApplicationForm({ requirementId }: ApplicationFormProps) {
       const checkout = await createCheckout({
         email: session.user.email,
         checkoutData: {
-          requirementId,
+          requirement_id: requirementId,
+          user_id: (session as any)?.id,
           ...data,
         },
       });
@@ -68,12 +69,12 @@ export function ApplicationForm({ requirementId }: ApplicationFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
         <Input
-          {...register("websiteUrl")}
-          placeholder="Your Website URL"
+          {...register("website_url")}
+          placeholder="Your Website URL (will be public)"
           className="w-full"
         />
-        {errors.websiteUrl && (
-          <p className="text-sm text-red-500 mt-1">{errors.websiteUrl.message}</p>
+        {errors.website_url && (
+          <p className="text-sm text-red-500 mt-1">{errors.website_url.message}</p>
         )}
       </div>
 
@@ -81,7 +82,7 @@ export function ApplicationForm({ requirementId }: ApplicationFormProps) {
         <Input
           {...register("pricing")}
           type="number"
-          placeholder="Your Price Estimate ($)"
+          placeholder="Your Price Estimate in USD (will be public)"
           className="w-full"
         />
         {errors.pricing && (
@@ -91,12 +92,23 @@ export function ApplicationForm({ requirementId }: ApplicationFormProps) {
 
       <div>
         <Textarea
-          {...register("contactDetails")}
+          {...register("contact_details")}
           placeholder="Your Contact Details"
           className="w-full"
         />
-        {errors.contactDetails && (
-          <p className="text-sm text-red-500 mt-1">{errors.contactDetails.message}</p>
+        {errors.contact_details && (
+          <p className="text-sm text-red-500 mt-1">{errors.contact_details.message}</p>
+        )}
+      </div>
+
+      <div>
+        <Textarea
+          {...register("product_description")}
+          placeholder="Your Product Description (will be public)"
+          className="w-full"
+        />
+        {errors.contact_details && (
+          <p className="text-sm text-red-500 mt-1">{errors.contact_details.message}</p>
         )}
       </div>
 
