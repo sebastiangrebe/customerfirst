@@ -1,29 +1,34 @@
-import { lemonSqueezy, APPLICATION_FEE_VARIANT_ID, STORE_ID } from './config';
+"use server"
+import { APPLICATION_FEE_VARIANT_ID, STORE_ID } from './config';
+import { createCheckout as createCheckoutLSQ } from '@lemonsqueezy/lemonsqueezy.js';
 
 interface CreateCheckoutOptions {
   email: string;
   checkoutData: {
     requirementId: string;
     websiteUrl: string;
-    pricing: number;
+    pricing: string;
     contactDetails: string;
   };
 }
 
 export async function createCheckout({ email, checkoutData }: CreateCheckoutOptions) {
-  const checkout = await lemonSqueezy.createCheckout({
-    storeId: STORE_ID,
-    variantId: APPLICATION_FEE_VARIANT_ID,
-    email,
-    checkoutData,
-    checkout: {
+  const checkout = await createCheckoutLSQ(
+    STORE_ID, 
+    APPLICATION_FEE_VARIANT_ID,
+    {
+    checkoutData: {
+      email: email ?? undefined,
+      custom: checkoutData
+    },
+    checkoutOptions: {
       embed: true,
-      darkMode: false,
       media: false,
     },
-    redirectUrls: {
-      success: `${process.env.NEXT_PUBLIC_APP_URL}/applications/success`,
-      cancel: `${process.env.NEXT_PUBLIC_APP_URL}/applications/cancel`,
+    productOptions: {
+      enabledVariants: [APPLICATION_FEE_VARIANT_ID as unknown as number],
+      redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL}/applications/success`,
+      // cancel: `${process.env.NEXT_PUBLIC_APP_URL}/applications/cancel`,
     },
   });
 

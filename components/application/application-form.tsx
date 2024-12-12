@@ -48,11 +48,12 @@ export function ApplicationForm({ requirementId }: ApplicationFormProps) {
         },
       });
 
-      // Initialize embedded checkout
-      const { createCheckout } = await import('@lemonsqueezy/lemonsqueezy.js');
-      createCheckout(checkout.data.id);
-
+      if (checkout && checkout.data) {
+        // Initialize embedded checkout
+        (window as any).LemonSqueezy.Url.Open(checkout.data.data.attributes.url);
+      }
     } catch (error) {
+      console.log(error)
       toast({
         title: "Error",
         description: "Failed to create checkout. Please try again.",

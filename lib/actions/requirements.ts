@@ -26,6 +26,10 @@ export async function createRequirement(data: RequirementInput) {
 }
 
 export async function getUserRequirements(): Promise<RequirementWithApplications[]> {
+  const session = await getSession() as any;
+
+  if (!session) throw new Error('Unauthorized');
+  supabase.auth.setSession({ access_token: session.accessToken, refresh_token: session.refreshToken });
   const { data: requirements, error: requirementsError } = await supabase
     .from('requirements')
     .select(`
@@ -40,6 +44,10 @@ export async function getUserRequirements(): Promise<RequirementWithApplications
 }
 
 export async function getRequirement(id: string) {
+  const session = await getSession() as any;
+
+  if (!session) throw new Error('Unauthorized');
+  supabase.auth.setSession({ access_token: session.accessToken, refresh_token: session.refreshToken });
   const { data: requirement, error } = await supabase
     .from('requirements')
     .select('*')
