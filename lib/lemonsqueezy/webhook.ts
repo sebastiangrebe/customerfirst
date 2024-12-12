@@ -1,10 +1,12 @@
-import { createHmac } from 'crypto';
+import * as crypto from 'crypto';
 
 export function verifyWebhookSignature(payload: string, signature: string): boolean {
-  const secret = process.env.LEMONSQUEEZY_WEBHOOK_SECRET!;
-  const hmac = createHmac('sha256', secret);
-  const digest = hmac.update(payload).digest('hex');
-  return signature === digest;
+  const hmac = Buffer.from(
+    crypto.createHmac('sha256', process.env.LEMONSQUEEZY_WEBHOOK_SECRET as any).update(payload).digest('hex'),
+    'hex',
+  );
+
+  return crypto.timingSafeEqual(hmac as any, signature as any);
 }
 
 export function handleWebhookEvent(event: any) {
