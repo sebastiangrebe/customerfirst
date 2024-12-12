@@ -108,7 +108,7 @@ export function RequirementWithApplications({ requirement }: Props) {
                       Applied {formatDistanceToNow(new Date(application.created_at))} ago
                     </p>
                   </div>
-                  {requirement.status === 'open' ? <div className="flex gap-2">
+                  {requirement.status === 'open' && application.status === 'pending' ? <div className="flex gap-2">
                     <Button
                       size="sm"
                       onClick={() => handleAccept(application.id)}
