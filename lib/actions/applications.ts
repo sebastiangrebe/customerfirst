@@ -14,24 +14,24 @@ export async function createApplication(data: ApplicationInput) {
   const checkout = await createCheckout(APPLICATION_FEE_VARIANT_ID, data.email);
   return checkout;
 
-  // Store application in database
-  const { data: application, error } = await supabase
-    .from('applications')
-    .insert([{
-      ...data,
-      status: 'pending',
-      checkoutId: checkout.data.id,
-      createdAt: new Date().toISOString(),
-    }])
-    .select()
-    .single();
+  // // Store application in database
+  // const { data: application, error } = await supabase
+  //   .from('applications')
+  //   .insert([{
+  //     ...data,
+  //     status: 'pending',
+  //     checkoutId: checkout.data.id,
+  //     createdAt: new Date().toISOString(),
+  //   }])
+  //   .select()
+  //   .single();
 
-  if (error) throw error;
+  // if (error) throw error;
 
-  return {
-    ...application,
-    checkoutUrl: checkout.data.url,
-  };
+  // return {
+  //   ...application,
+  //   checkoutUrl: checkout.data.url,
+  // };
 }
 
 export async function getApplications(requirementId: string) {

@@ -5,7 +5,7 @@ export interface Requirement {
   category: string;
   tags: string[];
   userId: string;
-  createdAt: string;
+  created_at: string;
   status: 'open' | 'closed';
 }
 

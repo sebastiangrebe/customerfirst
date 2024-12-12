@@ -7,8 +7,9 @@ import { getSession } from 'next-auth/react';
 type RequirementInput = z.infer<typeof requirementSchema>;
 
 export async function createRequirement(data: RequirementInput) {
-  const session = await getSession();
-  console.log(session)
+  const session = await getSession() as any;
+
+  if (!session) throw new Error('Unauthorized');
   supabase.auth.setSession({ access_token: session.accessToken, refresh_token: session.refreshToken });
   const { data: requirement, error } = await supabase
     .from('requirements')

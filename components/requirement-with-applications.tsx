@@ -72,7 +72,7 @@ export function RequirementWithApplications({ requirement }: Props) {
       </CardHeader>
       <CardContent>
         <p className="text-sm text-muted-foreground mb-6">{requirement.description}</p>
-        
+
         <h3 className="font-semibold mb-4">Applications ({requirement.applications.length})</h3>
         <div className="space-y-4">
           {requirement.applications.map((application) => (
@@ -80,7 +80,7 @@ export function RequirementWithApplications({ requirement }: Props) {
               <CardContent className="p-4">
                 <div className="flex justify-between items-start">
                   <div>
-                    <a 
+                    <a
                       href={application.websiteUrl}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -93,7 +93,7 @@ export function RequirementWithApplications({ requirement }: Props) {
                     </p>
                     <p className="text-sm mt-2">{application.contactDetails}</p>
                     <p className="text-xs text-muted-foreground mt-2">
-                      Applied {formatDistanceToNow(new Date(application.createdAt))} ago
+                      Applied {formatDistanceToNow(new Date(application.created_at))} ago
                     </p>
                   </div>
                   <div className="flex gap-2">

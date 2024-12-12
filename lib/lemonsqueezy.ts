@@ -8,7 +8,7 @@ lemonSqueezySetup({
   onError: (error) => console.error("Error!", error),
 });
 
-export const APPLICATION_FEE_VARIANT_ID = process.env.LEMONSQUEEZY_VARIANT_ID!;
+export const APPLICATION_FEE_VARIANT_ID = process.env.LEMONSQUEEZY_VARIANT_ID! as unknown as number;
 
 export async function createCheckout(variantId: number, email: string) {
   const embed = true
