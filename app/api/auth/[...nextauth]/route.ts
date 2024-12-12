@@ -49,7 +49,7 @@ const handler = NextAuth({
     error: '/',
   },
   callbacks: {
-    async jwt({ token, account, user, ...rest }) {
+    async jwt({ token, account, user }: any) {
         // Include access token when user signs in
         if (user?.accessToken) {
             token.accessToken = user.accessToken;
@@ -57,7 +57,7 @@ const handler = NextAuth({
         }
         return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: any) {
         // Pass the access token to the session
         session.accessToken = token.accessToken;
         session.refreshToken = token.refreshToken;
