@@ -18,8 +18,8 @@ export function MainNav() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link href="/" className="text-xl font-bold text-white flex items-center gap-2">
-              <Users className="h-6 w-6" />
-              CustomerFirst
+              <img src="/logo.png" height="50" width="50" alt="BetaCustomer" />
+              BetaCustomer
             </Link>
             <nav className="ml-8 hidden md:flex items-center space-x-4">
               <Link
