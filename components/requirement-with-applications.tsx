@@ -43,6 +43,9 @@ export function RequirementWithApplications({ requirement }: Props) {
       });
     } finally {
       setIsProcessing(null);
+      setTimeout(function() {
+        window.location.reload();
+      }, 1000)
     }
   };
 
@@ -62,6 +65,9 @@ export function RequirementWithApplications({ requirement }: Props) {
       });
     } finally {
       setIsProcessing(null);
+      setTimeout(function() {
+        window.location.reload();
+      }, 1000)
     }
   };
 
@@ -82,7 +88,9 @@ export function RequirementWithApplications({ requirement }: Props) {
       });
     } finally {
       setIsProcessing(null);
-      window.location.reload();
+      setTimeout(function() {
+        window.location.reload();
+      }, 1000)
     }
   }
 
@@ -102,7 +110,7 @@ export function RequirementWithApplications({ requirement }: Props) {
         </CardTitle>
         <div className="flex gap-2 mt-2">
           <Badge>{category.name}</Badge>
-          <Badge variant="outline">{requirement.status === 'open' ? 'Open' : 'Closed'}</Badge>
+          {requirement.status === 'open' && <Badge variant="outline">{requirement.status === 'open' ? 'Open' : 'Closed'}</Badge>}
         </div>
       </CardHeader>
       <CardContent>
