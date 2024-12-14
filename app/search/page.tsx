@@ -44,7 +44,7 @@ export default function SearchPage() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {isLoading ? (
-          <p>Loading...</p>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"><div className="p-8">Loading...</div></div>
         ) : requirements.length > 0 ? (
           requirements.map((requirement) => (
             <RequirementCard
