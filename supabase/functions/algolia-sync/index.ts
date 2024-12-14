@@ -15,9 +15,14 @@ Deno.serve(async (req) => {
     // Parse the webhook payload
     const { type, record: new_record, old_record, ...rest } = await req.json();
 
-    console.log(type, new_record, old_record, rest)
+    console.log("type", type)
+    console.log("new_record", new_record)
+    console.log("old_record", old_record)
+    console.log("rest", rest)
 
     const record = new_record || old_record;
+
+    console.log("record", record)
 
     if (!type || !record) {
       return new Response("Invalid payload", { status: 400 });

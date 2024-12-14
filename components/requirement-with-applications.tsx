@@ -10,6 +10,7 @@ import { formatDistanceToNow } from 'date-fns';
 import type { RequirementWithApplications } from '@/types';
 import { updateApplicationStatus } from '@/lib/actions/application-client';
 import { findCategory } from '@/helpers/findCategory';
+import { deleteRequirement } from '@/lib/actions/requirements-client';
 
 interface Props {
   requirement: RequirementWithApplications;
@@ -17,7 +18,7 @@ interface Props {
 
 export function RequirementWithApplications({ requirement }: Props) {
   const category = findCategory(requirement.category);
-  
+
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
   const { toast } = useToast();
 
@@ -64,10 +65,41 @@ export function RequirementWithApplications({ requirement }: Props) {
     }
   };
 
+  const handleDelete = async () => {
+    setIsProcessing(requirement.id);
+    try {
+      await deleteRequirement(requirement.id);
+      // Delete requirement
+      toast({
+        title: "Success",
+        description: "Requirement deleted.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete requirement.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsProcessing(null);
+      window.location.reload();
+    }
+  }
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{requirement.title}</CardTitle>
+        <CardTitle className="flex justify-between flex-row">
+          {requirement.title}
+          <Button
+            size="sm"
+            className="align-right bg-red-600 hover:bg-red-800"
+            onClick={() => handleDelete()}
+            disabled={requirement.status !== 'open'}
+          >
+            {isProcessing === requirement.id ? "Processing..." : "Delete"}
+          </Button>
+        </CardTitle>
         <div className="flex gap-2 mt-2">
           <Badge>{category.name}</Badge>
           <Badge variant="outline">{requirement.status === 'open' ? 'Open' : 'Closed'}</Badge>
