@@ -5,8 +5,8 @@ import { SearchIcon, PlusCircle, Trophy } from 'lucide-react';
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center max-w-7xl mx-auto">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
             Be the Perfect Match for Your
             <span className="text-primary block">First Beta Customer</span>
@@ -15,7 +15,7 @@ export default function Home() {
             Post your requirements or apply to fulfill others'. A simple, transparent platform
             connecting digital needs with solutions -  The BetaCustomer approach.
           </p>
-          <div className="mt-10 flex justify-center gap-4">
+          <div className="mt-10 flex justify-center gap-4 flex-col md:flex-row">
             <Link href="/requirements/new">
               <Button size="lg" className="gap-2">
                 <PlusCircle className="w-5 h-5" />
@@ -36,8 +36,20 @@ export default function Home() {
             </Link>
           </div>
         </div>
+        <section className="bg-gray-50 py-16 my-8">
+          <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 text-center">
+            <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                "Think of us as Craigslist for Founders, but with a twist!"
+              </h2>
+              <p className="text-lg md:text-xl text-gray-600 mb-6">
+                Whether you're an entrepreneur with a product looking for your first customer, or validating an idea before you launch, we connect you directly to the people who need what you offer. Post your requirements, find opportunities, and kickstart your journey—all in one place!
+              </p>
+            </div>
+          </div>
+        </section>
 
-        <div className="mt-32">
+        <div className="mt-16 max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-16">How It Works</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center p-6">
