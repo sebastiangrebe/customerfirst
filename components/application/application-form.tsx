@@ -9,8 +9,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { applicationSchema } from '@/lib/validations/application';
-import { createCheckout } from '@/lib/lemonsqueezy/checkout';
 import type { z } from 'zod';
+import { createCheckout } from '@/lib/polar/checkout';
 
 type FormData = z.infer<typeof applicationSchema>;
 
@@ -39,20 +39,33 @@ export function ApplicationForm({ requirementId }: ApplicationFormProps) {
     try {
       setIsSubmitting(true);
 
-      // Create checkout with application data
+      const metaData = {
+        requirement_id: requirementId,
+        user_id: (session as any)?.id,
+        ...data,
+      };
+
+      // // Create checkout with application data
+      // const checkout = await createCheckout({
+      //   email: session.user.email,
+      //   checkoutData: {
+      //     requirement_id: requirementId,
+      //     user_id: (session as any)?.id,
+      //     ...data,
+      //   },
+      // });
+
+      // if (checkout && checkout.data) {
+      //   // Initialize embedded checkout
+      //   (window as any).LemonSqueezy.Url.Open(checkout.data.data.attributes.url);
+      // }
+
       const checkout = await createCheckout({
         email: session.user.email,
-        checkoutData: {
-          requirement_id: requirementId,
-          user_id: (session as any)?.id,
-          ...data,
-        },
+        checkoutData: metaData,
       });
 
-      if (checkout && checkout.data) {
-        // Initialize embedded checkout
-        (window as any).LemonSqueezy.Url.Open(checkout.data.data.attributes.url);
-      }
+      window.location.href = checkout.url;
     } catch (error) {
       console.log(error)
       toast({
