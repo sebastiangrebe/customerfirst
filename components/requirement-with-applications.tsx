@@ -99,18 +99,18 @@ export function RequirementWithApplications({ requirement }: Props) {
       <CardHeader>
         <CardTitle className="flex justify-between flex-row">
           {requirement.title}
-          <Button
+          {requirement.status === 'open' && <Button
             size="sm"
             className="align-right bg-red-600 hover:bg-red-800"
             onClick={() => handleDelete()}
             disabled={requirement.status !== 'open'}
           >
             {isProcessing === requirement.id ? "Processing..." : "Delete"}
-          </Button>
+          </Button>}
         </CardTitle>
         <div className="flex gap-2 mt-2">
           <Badge>{category.name}</Badge>
-          {requirement.status === 'open' && <Badge variant="outline">{requirement.status === 'open' ? 'Open' : 'Closed'}</Badge>}
+          <Badge variant="outline">{requirement.status === 'open' ? 'Open' : 'Closed'}</Badge>
         </div>
       </CardHeader>
       <CardContent>
