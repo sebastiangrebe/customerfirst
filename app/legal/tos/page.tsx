@@ -100,7 +100,7 @@ export default function TOS() {
     <div>
       <h2 className="text-xl font-semibold mb-2">9. General Terms and Law</h2>
       <p>
-        This Agreement is governed by the laws of Singapore. You acknowledge that no joint venture, partnership,
+        This Agreement is governed by the laws of the United Arab Emirates. You acknowledge that no joint venture, partnership,
         employment, or agency relationship exists between you and BetaCustomer as a result of your use of these services.
         You agree not to hold yourself out as a representative, agent or employee of BetaCustomer. You agree that
         BetaCustomer will not be liable by reason of any representation, act or omission to act by you.
