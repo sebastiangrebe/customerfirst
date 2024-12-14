@@ -6,14 +6,13 @@ import { findCategory } from '@/helpers/findCategory';
 
 interface RequirementCardProps {
   requirement: Requirement;
-  onClick: () => void;
 }
 
-export function RequirementCard({ requirement, onClick }: RequirementCardProps) {
+export function RequirementCard({ requirement }: RequirementCardProps) {
   const category = findCategory(requirement.category);
 
   return (
-    <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={onClick}>
+    <Card className="cursor-pointer hover:shadow-lg transition-shadow">
       <CardHeader>
         <CardTitle>{requirement.title}</CardTitle>
         <div className="flex flex-wrap gap-2 mt-2">
