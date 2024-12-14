@@ -13,9 +13,11 @@ const algoliaIndex = algoliaClient.initIndex('requirements');
 Deno.serve(async (req) => {
   try {
     // Parse the webhook payload
-    const { type, record, ...rest } = await req.json();
+    const { type, record: new_record, old_record, ...rest } = await req.json();
 
-    console.log(type, record, rest)
+    console.log(type, new_record, old_record, rest)
+
+    const record = new_record || old_record;
 
     if (!type || !record) {
       return new Response("Invalid payload", { status: 400 });
