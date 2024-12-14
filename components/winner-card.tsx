@@ -13,23 +13,23 @@ export function WinnerCard({ winner }: WinnerCardProps) {
   const url = new URL(winner.website_url);
 
   return (
-    <Link href={`/requirements/${winner.requirement_id}`}>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg flex justify-between">
-            <a href={winner.website_url} target="_blank" rel="noopener noreferrer" className="hover:underline">
-              {url.hostname}
-            </a>
-            <Badge className="bg-green-500"><PartyPopperIcon size="20" className="mr-2"/> Winner</Badge>
-          </CardTitle>
-        </CardHeader>
+    <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+      <CardHeader className="hover:underline">
+      <a href={winner.website_url} target="_blank" rel="noopener noreferrer" >
+        <CardTitle className="text-lg flex justify-between">
+          {url.hostname}
+          <Badge className="bg-green-500"><PartyPopperIcon size="20" className="mr-2"/> Winner</Badge>
+        </CardTitle>
+      </a>
+      </CardHeader>
+      <Link href={`/requirements/${winner.requirement_id}`}>
         <CardContent>
           <p className="text-sm mb-1">{(winner as any).applications.product_description}</p>
           <p className="text-sm mt-2 text-muted-foreground">
             Selected {formatDistanceToNow(new Date(winner.selected_at))} ago
           </p>
         </CardContent>
-      </Card>
-    </Link>
+      </Link>
+    </Card>
   );
 }
