@@ -1,20 +1,20 @@
 "use client";
 
-import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { AuthCheck } from '@/components/auth/auth-check';
 import { RequirementWithApplications } from '@/components/requirement-with-applications';
 import { getUserRequirements } from '@/lib/actions/requirements';
 import type { RequirementWithApplications as RequirementType } from '@/types';
+import { useUser } from '../providers';
 
 export default function DashboardPage() {
-  const { data: session } = useSession();
+  const user = useUser();
   const [requirements, setRequirements] = useState<RequirementType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function loadRequirements() {
-      if (session?.user?.email) {
+      if (user?.email) {
         try {
           const data = await getUserRequirements();
           setRequirements(data);
@@ -27,7 +27,7 @@ export default function DashboardPage() {
     }
 
     loadRequirements();
-  }, [session]);
+  }, [user]);
 
   if (isLoading) {
     return <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"><div className="p-8">Loading...</div></div>;

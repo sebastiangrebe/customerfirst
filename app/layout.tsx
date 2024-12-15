@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { MainNav } from '@/components/main-nav';
 import { Providers } from './providers';
 import { Footer } from '@/components/Footer';
+import { createClient } from '@/utils/supabase/server';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -32,15 +33,20 @@ export const metadata: Metadata = {
   "robots": "index, follow",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const supabase = await createClient();
+  const {
+    data: { user: session },
+  } = await supabase.auth.getUser();
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
+        <Providers session={session}>
           <MainNav />
           {children}
           <Toaster />

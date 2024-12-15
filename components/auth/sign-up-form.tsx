@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
@@ -10,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { signUpSchema } from '@/lib/validations/auth';
 import type { z } from 'zod';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/utils/supabase/client';
 
 type SignUpFormData = z.infer<typeof signUpSchema>;
 
@@ -32,14 +31,9 @@ export function SignUpForm({ redirectUrl }: SignUpFormProps) {
 
       if (error) {
         throw new Error(error.message);
+      } else if (redirectUrl) {
+        window.location.href = redirectUrl;
       }
-
-      // Sign in after successful registration
-      await signIn('credentials', {
-        email: data.email,
-        password: data.password,
-        callbackUrl: redirectUrl,
-      });
     } catch (error) {
       toast({
         title: "Error",

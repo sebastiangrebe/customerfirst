@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { signInSchema } from '@/lib/validations/auth';
 import type { z } from 'zod';
+import { supabase } from '@/utils/supabase/client';
 
 type SignInFormData = z.infer<typeof signInSchema>;
 
@@ -24,16 +24,15 @@ export function SignInForm({ redirectUrl }: SignInFormProps) {
     resolver: zodResolver(signInSchema),
   });
 
-  const onSubmit = async (data: SignInFormData) => {
+  const onSubmit = async (formData: SignInFormData) => {
     setIsLoading(true);
     try {
-      const result = await signIn('credentials', {
-        email: data.email,
-        password: data.password,
-        redirect: false,
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
       });
 
-      if (result?.error) {
+      if (error) {
         toast({
           title: "Error",
           description: "Invalid email or password",

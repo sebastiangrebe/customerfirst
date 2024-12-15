@@ -82,11 +82,6 @@ export const Footer = () => {
             </Link>
           </div>
         </div>
-        <iframe
-          src="https://ueberwatch.com/api/badge/embed/betacustomer.com"
-          width="240"
-          height="60"
-        ></iframe>
       </section>
 
       <section className="container pb-14 text-center  mx-auto">

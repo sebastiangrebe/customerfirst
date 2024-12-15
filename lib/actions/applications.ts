@@ -1,5 +1,5 @@
 "use server"
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/utils/supabase/client';
 import { createCheckout, APPLICATION_FEE_VARIANT_ID } from '@/lib/lemonsqueezy';
 import type { z } from 'zod';
 import type { applicationSchema } from '@/lib/validations/application';

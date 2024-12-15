@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
@@ -11,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { applicationSchema } from '@/lib/validations/application';
 import type { z } from 'zod';
 import { createCheckout } from '@/lib/polar/checkout';
+import { useUser } from '@/app/providers';
 
 type FormData = z.infer<typeof applicationSchema>;
 
@@ -19,7 +19,7 @@ interface ApplicationFormProps {
 }
 
 export function ApplicationForm({ requirementId }: ApplicationFormProps) {
-  const { data: session } = useSession();
+  const user = useUser();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
@@ -27,7 +27,8 @@ export function ApplicationForm({ requirementId }: ApplicationFormProps) {
   });
 
   const onSubmit = async (data: FormData) => {
-    if (!session?.user?.email) {
+    console.log(user)
+    if (!user?.email) {
       toast({
         title: "Error",
         description: "Please sign in to apply",
@@ -41,27 +42,12 @@ export function ApplicationForm({ requirementId }: ApplicationFormProps) {
 
       const metaData = {
         requirement_id: requirementId,
-        user_id: (session as any)?.id,
+        user_id: user?.id,
         ...data,
       };
 
-      // // Create checkout with application data
-      // const checkout = await createCheckout({
-      //   email: session.user.email,
-      //   checkoutData: {
-      //     requirement_id: requirementId,
-      //     user_id: (session as any)?.id,
-      //     ...data,
-      //   },
-      // });
-
-      // if (checkout && checkout.data) {
-      //   // Initialize embedded checkout
-      //   (window as any).LemonSqueezy.Url.Open(checkout.data.data.attributes.url);
-      // }
-
       const checkout = await createCheckout({
-        email: session.user.email,
+        email: user.email,
         checkoutData: metaData,
       });
 
