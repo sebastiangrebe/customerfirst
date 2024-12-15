@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   const next = searchParams.get('next') ?? '/'
 console.log("code", code)
   if (code) {
-    let supabaseResponse = null;
+    let supabaseResponse: any = null;
     const forwardedHost = request.headers.get('x-forwarded-host') // original origin before load balancer
     const isLocalEnv = process.env.NODE_ENV === 'development'
     if (isLocalEnv) {
