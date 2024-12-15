@@ -9,9 +9,12 @@ import { createClient } from '@/utils/supabase/server';
 
 const inter = Inter({ subsets: ['latin'] });
 
+const title = 'BetaCustomer - Find Your First Beta Customer | Connect with Providers and Clients Effortlessly';
+const description = "A platform designed to help users connect with their First Beta Customers or providers. Post your requirements, apply for opportunities, and kickstart your business journey with ease.";
+
 export const metadata: Metadata = {
-  title: 'BetaCustomer - Find Your First Beta Customer | Connect with Providers and Clients Effortlessly',
-  description: "A platform designed to help users connect with their First Beta Customers or providers. Post your requirements, apply for opportunities, and kickstart your business journey with ease.",
+  title,
+  description,
   "keywords": [
     "First Beta Customer",
     "online tools",
@@ -26,11 +29,23 @@ export const metadata: Metadata = {
   ],
   "twitter": {
     "card": "summary_large_image",
-    "title": "BetaCustomer - Find Your First Beta Customer | Connect Effortlessly",
-    "description": "A platform for posting requirements and connecting with potential clients or providers.",
-    "site": "@sebastiangrebe"
+    title,
+    description,
+    "site": "@sebastiangrebe",
+    images: ['https://www.betacustomer.com/logo.png'],
   },
   "robots": "index, follow",
+  openGraph: {
+    title,
+    description,
+    images: [
+      {
+        url: 'https://www.betacustomer.com/logo.png',
+        width: 400,
+        height: 400,
+      },
+    ],
+  },
 };
 
 export default async function RootLayout({
