@@ -6,7 +6,7 @@ export const Footer = () => {
     <footer id="footer" className="mx-auto">
       <hr className="w-11/12" />
 
-      <section className="max-w-7xl container py-20 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8 mx-auto">
+      <section className="max-w-7xl container py-20 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8 mx-auto px-6">
         <div className="col-span-full xl:col-span-2">
           <Logo />
         </div>
