@@ -22,7 +22,7 @@ export function RequirementCard({ requirement }: RequirementCardProps) {
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground line-clamp-3">
+        <p className="text-sm text-muted-foreground">
           {requirement.description}
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
