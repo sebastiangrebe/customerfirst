@@ -22,13 +22,14 @@ export async function createRequirement(data: RequirementInput) {
   return requirement;
 }
 
-export async function getUserRequirements(): Promise<RequirementWithApplications[]> {
+export async function getUserRequirements(userId: number): Promise<RequirementWithApplications[]> {
   const { data: requirements, error: requirementsError } = await supabase
     .from('requirements')
     .select(`
       *,
       applications (*)
     `)
+    .eq('user_id', userId)
     .order('created_at', { ascending: false });
 
   if (requirementsError) throw requirementsError;

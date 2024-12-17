@@ -16,7 +16,7 @@ export default function DashboardPage() {
     async function loadRequirements() {
       if (user?.email) {
         try {
-          const data = await getUserRequirements();
+          const data = await getUserRequirements(user.id);
           setRequirements(data);
         } catch (error) {
           console.error('Failed to load requirements:', error);
