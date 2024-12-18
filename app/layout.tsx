@@ -9,14 +9,15 @@ import { createClient } from '@/utils/supabase/server';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const title = 'BetaCustomer - Find Your First Beta Customer | Connect with Providers and Clients Effortlessly';
-const description = "A platform designed to help users connect with their First Beta Customers or providers. Post your requirements, apply for opportunities, and kickstart your business journey with ease.";
+const title = 'BetaCustomer - Find Your First Customer | Connect with Providers and Clients Effortlessly';
+const description = "A platform designed to help users connect with their First Customers or providers. Post your requirements, apply for opportunities, and kickstart your business journey with ease.";
 
 export const metadata: Metadata = {
   title,
   description,
   "keywords": [
-    "First Beta Customer",
+    "First Customer",
+    "customer first",
     "online tools",
     "business connections",
     "find clients",
@@ -25,7 +26,8 @@ export const metadata: Metadata = {
     "business matching",
     "customer acquisition",
     "freelance marketplace",
-    "connect providers"
+    "connect providers",
+    "find customer"
   ],
   "twitter": {
     "card": "summary_large_image",

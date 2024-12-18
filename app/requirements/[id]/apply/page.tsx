@@ -8,7 +8,7 @@ export default function RequirementPage({ params }: { params: { id: string } }) 
   return (
     <AuthCheck>
       <div className="max-w-2xl mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-8">Apply for your First Beta Customer</h1>
+        <h1 className="text-3xl font-bold mb-8">Apply for your First Customer</h1>
         <ApplicationForm requirementId={params.id} />
       </div>
       <Script src="https://app.lemonsqueezy.com/js/lemon.js" onLoad={() => {
