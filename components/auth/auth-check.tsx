@@ -15,6 +15,10 @@ export function AuthCheck({ children }: AuthCheckProps) {
   const pathname = usePathname();
   const [showAuthDialog, setShowAuthDialog] = useState(false);
 
+  const handleClose = () => {
+    window.location.href = '/';
+  }
+
   useEffect(() => {
     if (!user) {
       setShowAuthDialog(true);
@@ -31,7 +35,7 @@ export function AuthCheck({ children }: AuthCheckProps) {
 
   return (
     <>
-      {user ? children : <AuthDialog isOpen={showAuthDialog} onClose={() => setShowAuthDialog(false)} redirectUrl={pathname} />}
+      {user ? children : <AuthDialog isOpen={showAuthDialog} onClose={() => handleClose()} redirectUrl={pathname} />}
     </>
   );
 }
